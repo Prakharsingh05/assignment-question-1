@@ -6,7 +6,11 @@ import ListHeaderCell from "./ListHeaderCell";
 
 import styles from "./List.module.css";
 
-const List = ({ rows }) => {
+const List = ({ rows  , orders , currency , search , onRowClick}) => {
+
+  const data = rows.map((rows , index)=> ({...rows , ...orders[index]}))
+
+  const filteredItem = data.filter((item)=> item["&id"].toLowerCase().includes(search.toLowerCase()))
   return (
     <table className={styles.container}>
       <thead>
@@ -19,13 +23,13 @@ const List = ({ rows }) => {
         </ListHeader>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <ListRow>
-            <ListRowCell>{row["&id"]}</ListRowCell>
-            <ListRowCell>{row.executionDetails.buySellIndicator}</ListRowCell>
-            <ListRowCell>{row.executionDetails.orderStatus}</ListRowCell>
-            <ListRowCell>{row.orderSubmitted}</ListRowCell>
-            <ListRowCell>{row.bestExecutionData.orderVolume.USD}</ListRowCell>
+        {filteredItem.map((info) => (
+          <ListRow key={info["&key"]} item={info} onRowClick={onRowClick}>
+            <ListRowCell>{info["&id"]}</ListRowCell>
+            <ListRowCell>{info.executionDetails.buySellIndicator}</ListRowCell>
+            <ListRowCell>{info.executionDetails.orderStatus}</ListRowCell>
+            <ListRowCell>{info.orderSubmitted}</ListRowCell>
+            <ListRowCell>{info.bestExecutionData.orderVolume[currency]}</ListRowCell>
           </ListRow>
         ))}
       </tbody>
