@@ -17,9 +17,12 @@ import Card from "../component/card/Card";
 const Dashboard = () => {
   const [currency, setCurrency] = useState("EUR");
   const [searchText, setSearchText] = useState("");
+  const [newKey, setNewKey] = useState("");
   const [selectedOrderDetails, setSelectedOrderDetails] = useState({});
   const [selectedOrderTimeStamps, setSelectedOrderTimeStamps] = useState({});
 
+    const rows = mockData.results
+    const orders = timestamps.results
   return (
     <div>
       <div className={styles.header}>
