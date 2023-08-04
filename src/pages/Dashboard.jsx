@@ -23,6 +23,19 @@ const Dashboard = () => {
 
     const rows = mockData.results
     const orders = timestamps.results
+
+    const data = rows.map((rows, index) => ({ ...rows, ...orders[index] }))
+
+    
+	const handleClick = (itemId) => {
+		const selectedData = data.find((item) => item["&key"] === itemId)
+
+		setRowKey(selectedData["&key"])
+		setSelectedOrderDetails(selectedData.executionDetails)
+		setSelectedOrderTimeStamps(selectedData.timestamps)
+	};	
+
+  
   return (
     <div>
       <div className={styles.header}>
