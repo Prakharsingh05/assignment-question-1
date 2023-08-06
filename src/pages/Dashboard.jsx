@@ -18,7 +18,10 @@ const Dashboard = () => {
   const rows = mockData.results;
   const orders = timestamps.results;
 
-  const data = rows.map((rows, index) => ({ ...rows, ...orders[index] }));
+  const data = rows.map((rows, index) => ({
+    ...rows,
+    ...orders[index],
+  }));
 
   const handleClick = (itemId) => {
     const selectedData = data.find((item) => item["&key"] === itemId);
@@ -37,7 +40,7 @@ const Dashboard = () => {
         />
         <div className={styles.actionBox}>
           <Search
-            searchText={searchText}
+            value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <Dropdown
@@ -60,12 +63,13 @@ const Dashboard = () => {
             newKey={newKey}
           />
         </div>
-        <List
-          rows={data}
-          currency={currency}
-          search={searchText}
-          onRowClick={handleClick}
-        />
+		<List
+      rows={mockData.results}
+      orders={timestamps.results}
+      currency={currency}
+      search={searchText}  
+      onRowClick={handleClick}
+    />
       </div>
     </div>
   );
