@@ -63,13 +63,13 @@ const Dashboard = () => {
             newKey={newKey}
           />
         </div>
-        <List
-          rows={mockData.results}
-          orders={timestamps.results}
-          currency={currency}
-          search={searchText}
-          onRowClick={handleClick}
-        />
+		<List
+      rows={mockData.results}
+      orders={timestamps.results}
+      currency={currency}
+      search={searchText}  
+      onRowClick={handleClick}
+    />
       </div>
     </div>
   );
