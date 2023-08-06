@@ -1,16 +1,17 @@
+import React from "react";
 import ListRow from "./ListRow";
 import ListRowCell from "./ListRowCell";
-
 import ListHeader from "./ListHeader";
 import ListHeaderCell from "./ListHeaderCell";
-
 import styles from "./List.module.css";
 
-const List = ({ rows  , orders , currency , search , onRowClick}) => {
+const List = ({ rows, orders, currency, search, onRowClick }) => {
+  const data = rows.map((rows, index) => ({ ...rows, ...orders[index] }));
 
-  const data = rows.map((rows , index)=> ({...rows , ...orders[index]}))
+  const filteredItem = data.filter((item) =>
+    item["&id"].toLowerCase().includes(search.toLowerCase())
+  );
 
-  const filteredItem = data.filter((item)=> item["&id"].toLowerCase().includes(search.toLowerCase()))
   return (
     <table className={styles.container}>
       <thead>
@@ -19,7 +20,8 @@ const List = ({ rows  , orders , currency , search , onRowClick}) => {
           <ListHeaderCell>Buy/Sell</ListHeaderCell>
           <ListHeaderCell>Country</ListHeaderCell>
           <ListHeaderCell>Order Submitted</ListHeaderCell>
-          <ListHeaderCell>Order Volume / USD</ListHeaderCell>
+          {/* Display Order Volume based on selected currency */}
+          <ListHeaderCell>Order Volume / {currency}</ListHeaderCell>
         </ListHeader>
       </thead>
       <tbody>
@@ -29,7 +31,10 @@ const List = ({ rows  , orders , currency , search , onRowClick}) => {
             <ListRowCell>{info.executionDetails.buySellIndicator}</ListRowCell>
             <ListRowCell>{info.executionDetails.orderStatus}</ListRowCell>
             <ListRowCell>{info.orderSubmitted}</ListRowCell>
-            <ListRowCell>{info.bestExecutionData.orderVolume[currency]}</ListRowCell>
+            {/* Display Order Volume based on selected currency */}
+            <ListRowCell>
+              {info.bestExecutionData.orderVolume[currency]}
+            </ListRowCell>
           </ListRow>
         ))}
       </tbody>
