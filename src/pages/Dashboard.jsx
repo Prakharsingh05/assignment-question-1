@@ -15,8 +15,15 @@ const Dashboard = () => {
   const [selectedOrderDetails, setSelectedOrderDetails] = useState({});
   const [selectedOrderTimeStamps, setSelectedOrderTimeStamps] = useState({});
 
-  const rows = mockData.results;
-  const orders = timestamps.results;
+  // Ensure unique keys for each element in mockData and timestamps
+  const rows = mockData.results.map((item) => ({
+    ...item,
+    key: item["&key"],
+  }));
+  const orders = timestamps.results.map((item) => ({
+    ...item,
+    key: item["&key"],
+  }));
 
   const data = rows.map((rows, index) => ({
     ...rows,
@@ -24,9 +31,9 @@ const Dashboard = () => {
   }));
 
   const handleClick = (itemId) => {
-    const selectedData = data.find((item) => item["&key"] === itemId);
+    const selectedData = data.find((item) => item.key === itemId);
 
-    setNewKey(selectedData["&key"]);
+    setNewKey(selectedData.key);
     setSelectedOrderDetails(selectedData.executionDetails);
     setSelectedOrderTimeStamps(selectedData.timestamps);
   };
@@ -63,13 +70,13 @@ const Dashboard = () => {
             newKey={newKey}
           />
         </div>
-		<List
-      rows={mockData.results}
-      orders={timestamps.results}
-      currency={currency}
-      search={searchText}  
-      onRowClick={handleClick}
-    />
+        <List
+          rows={rows}
+          orders={orders}
+          currency={currency}
+          search={searchText}
+          onRowClick={handleClick}
+        />
       </div>
     </div>
   );

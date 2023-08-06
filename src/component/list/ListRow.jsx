@@ -1,11 +1,16 @@
+import React from "react";
 import styles from "./ListRow.module.css";
 
-const ListCell = ({ children, item, onRowClick }) => {
-    const handleClick = () => {
-        onRowClick(item["&key"])
-    }
+const ListCell = ({ children, onRowClick }) => {
+  const handleClick = () => {
+    onRowClick();
+  };
 
-    return <tr className={styles.cell} onClick={handleClick}>{children}</tr>;
+  return (
+    <tr className={styles.cell} onClick={handleClick}>
+      {children}
+    </tr>
+  );
 };
 
 export default ListCell;
