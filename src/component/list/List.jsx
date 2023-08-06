@@ -6,9 +6,9 @@ import ListHeaderCell from "./ListHeaderCell";
 import styles from "./List.module.css";
 
 const List = ({ rows, orders, currency, search, onRowClick }) => {
-  const data = rows.map((rows, index) => ({ ...rows, ...orders[index] }));
+  const data = rows.map((row, index) => ({ ...row, ...orders[index] }));
 
-  const filteredItem = data.filter((item) =>
+  const filteredData = data.filter((item) =>
     item["&id"].toLowerCase().includes(search.toLowerCase())
   );
 
@@ -20,18 +20,20 @@ const List = ({ rows, orders, currency, search, onRowClick }) => {
           <ListHeaderCell>Buy/Sell</ListHeaderCell>
           <ListHeaderCell>Country</ListHeaderCell>
           <ListHeaderCell>Order Submitted</ListHeaderCell>
-          {/* Display Order Volume based on selected currency */}
           <ListHeaderCell>Order Volume / {currency}</ListHeaderCell>
         </ListHeader>
       </thead>
       <tbody>
-        {filteredItem.map((info) => (
-          <ListRow key={info["&key"]} item={info} onRowClick={onRowClick}>
+        {filteredData.map((info) => (
+          <ListRow
+            key={info["&key"]}
+            item={info}
+            onRowClick={onRowClick}
+          >
             <ListRowCell>{info["&id"]}</ListRowCell>
             <ListRowCell>{info.executionDetails.buySellIndicator}</ListRowCell>
             <ListRowCell>{info.executionDetails.orderStatus}</ListRowCell>
-            <ListRowCell>{info.orderSubmitted}</ListRowCell>
-            {/* Display Order Volume based on selected currency */}
+            <ListRowCell>{info.timestamps.orderSubmitted}</ListRowCell>
             <ListRowCell>
               {info.bestExecutionData.orderVolume[currency]}
             </ListRowCell>
